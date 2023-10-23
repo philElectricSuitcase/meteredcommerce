@@ -1,0 +1,43 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-meteredcommerce-dev-94002-authRole",
+      "UnauthRoleArn": "arn:aws:iam::822858670676:role/amplify-meteredcommerce-dev-94002-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::822858670676:role/amplify-meteredcommerce-dev-94002-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
+      "UnauthRoleName": "amplify-meteredcommerce-dev-94002-unauthRole",
+      "StackName": "amplify-meteredcommerce-dev-94002",
+      "StackId": "arn:aws:cloudformation:eu-west-2:822858670676:stack/amplify-meteredcommerce-dev-94002/c0f96860-717f-11ee-b2b6-0a1f5e11db8a",
+      "AmplifyAppId": "d1o82szco3chk8"
+    },
+    "categories": {
+      "function": {
+        "database": {
+          "dbHost": "utility.cgu5if2hyatb.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPwd": "Th1s1sS3cure!",
+          "dbPort": "3306",
+          "dbName": "mc01",
+          "dbRegion": "eu-north-1",
+          "deploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
+          "s3Key": "amplify-builds/database-613638416e6f65744859-build.zip"
+        },
+        "authentication": {
+          "dbHost": "utility.cgu5if2hyatb.eu-north-1.rds.amazonaws.com",
+          "dbUser": "admin",
+          "dbPwd": "Th1s1sS3cure!",
+          "dbPort": "3306",
+          "dbName": "mc01",
+          "dbRegion": "eu-north-1",
+          "deploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
+          "s3Key": "amplify-builds/authentication-62774b64447939394359-build.zip"
+        }
+      },
+      "api": {
+        "database": {},
+        "authentication": {}
+      }
+    }
+  }
+}

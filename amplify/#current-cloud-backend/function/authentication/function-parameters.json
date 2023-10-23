@@ -1,0 +1,38 @@
+{
+  "lambdaLayers": [
+    {
+      "type": "ExternalLayer",
+      "arn": "arn:aws:lambda:eu-west-2:822858670676:layer:Express_and_AWS-Serverless-Express_Layer:1"
+    },
+    {
+      "type": "ExternalLayer",
+      "arn": "arn:aws:lambda:eu-west-2:822858670676:layer:mysql:1"
+    }
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "dbHost",
+      "environmentVariableName": "DB_HOST"
+    },
+    {
+      "cloudFormationParameterName": "dbUser",
+      "environmentVariableName": "DB_USER"
+    },
+    {
+      "cloudFormationParameterName": "dbPwd",
+      "environmentVariableName": "DB_PWD"
+    },
+    {
+      "cloudFormationParameterName": "dbPort",
+      "environmentVariableName": "DB_PORT"
+    },
+    {
+      "cloudFormationParameterName": "dbName",
+      "environmentVariableName": "DB_NAME"
+    },
+    {
+      "cloudFormationParameterName": "dbRegion",
+      "environmentVariableName": "DB_REGION"
+    }
+  ]
+}

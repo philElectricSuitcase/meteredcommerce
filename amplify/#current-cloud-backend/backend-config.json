@@ -1,0 +1,176 @@
+{
+  "api": {
+    "authentication": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "database": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "database"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "authentication": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "database": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_authentication_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_dbPort": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_dbPwd": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_dbRegion": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_authentication_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_dbHost": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_dbName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_dbPort": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_dbPwd": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_dbRegion": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_dbUser": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    },
+    "AMPLIFY_function_database_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "database"
+        }
+      ]
+    }
+  }
+}
