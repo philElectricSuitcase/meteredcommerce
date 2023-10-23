@@ -1,5 +1,5 @@
 {
-  "name": "my-admin",
+  "name": "meteredcommerce",
   "private": true,
   "scripts": {
     "dev": "vite",
