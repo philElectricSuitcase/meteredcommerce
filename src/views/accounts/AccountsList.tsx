@@ -43,4 +43,4 @@ const AccountsForm = () => (
   </RowForm>
 );
 
-export default AccountsList;
+export default AccountsListEditable;
