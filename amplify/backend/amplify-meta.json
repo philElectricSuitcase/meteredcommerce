@@ -12,52 +12,62 @@
       "AmplifyAppId": "d1o82szco3chk8"
     }
   },
-  "function": {
-    "database": {
-      "build": true,
+  "api": {
+    "authentication": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "authentication"
+        }
+      ],
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [],
-      "lastBuildTimeStamp": "2023-10-23T09:17:30.329Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-10-23T09:17:38.836Z",
-      "distZipFilename": "database-613638416e6f65744859-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
-        "s3Key": "amplify-builds/database-613638416e6f65744859-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/function/database-cloudformation-template.json",
-        "logicalId": "functiondatabase"
-      },
-      "lastPushTimeStamp": "2023-10-23T09:19:24.496Z",
+      "service": "API Gateway",
       "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::822858670676:role/meteredcommerceLambdaRolea9d01a30-dev",
-        "Region": "eu-west-2",
-        "Arn": "arn:aws:lambda:eu-west-2:822858670676:function:database-dev",
-        "Name": "database-dev",
-        "LambdaExecutionRole": "meteredcommerceLambdaRolea9d01a30-dev"
+        "ApiName": "authentication",
+        "RootUrl": "https://x56x6mlw4i.execute-api.eu-west-2.amazonaws.com/dev",
+        "ApiId": "x56x6mlw4i"
       },
-      "lastPushDirHash": "Uab0lBeTmqWyrC6mcQhOEwuC8Go="
+      "lastPushTimeStamp": "2023-10-26T10:45:06.240Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/api/authentication-cloudformation-template.json",
+        "logicalId": "apiauthentication"
+      }
     },
+    "database": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "database"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway",
+      "output": {
+        "ApiName": "database",
+        "RootUrl": "https://4hmjxzebnc.execute-api.eu-west-2.amazonaws.com/dev",
+        "ApiId": "4hmjxzebnc"
+      },
+      "lastPushTimeStamp": "2023-10-26T10:45:06.260Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/api/database-cloudformation-template.json",
+        "logicalId": "apidatabase"
+      }
+    }
+  },
+  "function": {
     "authentication": {
       "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "dependsOn": [],
-      "lastBuildTimeStamp": "2023-10-23T09:17:44.023Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-10-23T09:17:49.399Z",
-      "distZipFilename": "authentication-62774b64447939394359-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
-        "s3Key": "amplify-builds/authentication-62774b64447939394359-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/function/authentication-cloudformation-template.json",
-        "logicalId": "functionauthentication"
-      },
-      "lastPushTimeStamp": "2023-10-23T09:19:24.496Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::822858670676:role/meteredcommerceLambdaRole76e1655c-dev",
         "Region": "eu-west-2",
@@ -65,59 +75,29 @@
         "Name": "authentication-dev",
         "LambdaExecutionRole": "meteredcommerceLambdaRole76e1655c-dev"
       },
-      "lastPushDirHash": "q0wcb8EcLsMCN9PVSqBFmieIi50="
-    }
-  },
-  "api": {
-    "database": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "database",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ],
+      "lastPushTimeStamp": "2023-10-26T10:45:06.266Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/api/database-cloudformation-template.json",
-        "logicalId": "apidatabase"
-      },
-      "lastPushTimeStamp": "2023-10-23T09:19:24.496Z",
-      "output": {
-        "ApiName": "database",
-        "RootUrl": "https://4hmjxzebnc.execute-api.eu-west-2.amazonaws.com/dev",
-        "ApiId": "4hmjxzebnc"
-      },
-      "lastPushDirHash": "12tXess1iTISLm1Hy+4IVuVlET8="
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/function/authentication-cloudformation-template.json",
+        "logicalId": "functionauthentication"
+      }
     },
-    "authentication": {
-      "service": "API Gateway",
+    "database": {
+      "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "authentication",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ],
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/api/authentication-cloudformation-template.json",
-        "logicalId": "apiauthentication"
-      },
-      "lastPushTimeStamp": "2023-10-23T09:19:24.496Z",
+      "service": "Lambda",
       "output": {
-        "ApiName": "authentication",
-        "RootUrl": "https://x56x6mlw4i.execute-api.eu-west-2.amazonaws.com/dev",
-        "ApiId": "x56x6mlw4i"
+        "LambdaExecutionRoleArn": "arn:aws:iam::822858670676:role/meteredcommerceLambdaRolea9d01a30-dev",
+        "Region": "eu-west-2",
+        "Arn": "arn:aws:lambda:eu-west-2:822858670676:function:database-dev",
+        "Name": "database-dev",
+        "LambdaExecutionRole": "meteredcommerceLambdaRolea9d01a30-dev"
       },
-      "lastPushDirHash": "xsv0c9plmbBoZ0XOhHucxGOkSY4="
+      "lastPushTimeStamp": "2023-10-26T10:45:06.298Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/function/database-cloudformation-template.json",
+        "logicalId": "functiondatabase"
+      }
     }
   }
 }
