@@ -1,14 +1,5 @@
 {
-  "lambdaLayers": [
-    {
-      "type": "ExternalLayer",
-      "arn": "arn:aws:lambda:eu-west-2:822858670676:layer:Express_and_AWS-Serverless-Express_Layer:1"
-    },
-    {
-      "type": "ExternalLayer",
-      "arn": "arn:aws:lambda:eu-west-2:822858670676:layer:mysql:1"
-    }
-  ],
+  "lambdaLayers": [],
   "environmentVariableList": [
     {
       "cloudFormationParameterName": "dbHost",

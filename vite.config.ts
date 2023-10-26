@@ -11,4 +11,12 @@ export default defineConfig({
     host: true,
   },
   base: "./",
+  resolve: {
+    alias: [
+      {
+        find: "./runtimeConfig",
+        replacement: "./runtimeConfig.browser", // ensures browser compatible version of AWS JS SDK is used
+      },
+    ],
+  },
 });

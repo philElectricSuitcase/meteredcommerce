@@ -1,7 +1,21 @@
-import { List, TextField, TextInput } from "react-admin";
+import { List, TextField, TextInput, Datagrid, EditButton } from "react-admin";
 import { EditableDatagrid, RowForm } from "@react-admin/ra-editable-datagrid";
 
 const AccountsList = () => (
+  <List>
+    <Datagrid>
+      <TextField source="Account Name" />
+      <TextField source="Account No" />
+      <TextField source="Address" />
+      <TextField source="Email" />
+      <TextField source="Start Date" />
+      <TextField source="Active" />
+      <EditButton />
+    </Datagrid>
+  </List>
+);
+
+const AccountsListEditable = () => (
   <List hasCreate empty={false}>
     <EditableDatagrid
       mutationMode="undoable"

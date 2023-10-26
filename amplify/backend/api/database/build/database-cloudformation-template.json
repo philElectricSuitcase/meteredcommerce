@@ -1,5 +1,5 @@
 {
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.1.1\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functiondatabaseName": {
@@ -368,7 +368,7 @@
         "Name": "database"
       }
     },
-    "databaseDefault4XXResponse03528534": {
+    "databaseDefault4XXResponse1a5b62c9": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
@@ -383,7 +383,7 @@
         }
       }
     },
-    "databaseDefault5XXResponse03528534": {
+    "databaseDefault5XXResponse1a5b62c9": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWdatabase4af51a2d": {
+    "DeploymentAPIGWdatabase95a9794b": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "databaseDefault4XXResponse03528534",
-        "databaseDefault5XXResponse03528534"
+        "databaseDefault4XXResponse1a5b62c9",
+        "databaseDefault5XXResponse1a5b62c9"
       ]
     }
   }

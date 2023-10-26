@@ -5,13 +5,13 @@ const awsmobile = {
     "aws_project_region": "eu-west-2",
     "aws_cloud_logic_custom": [
         {
-            "name": "database",
-            "endpoint": "https://4hmjxzebnc.execute-api.eu-west-2.amazonaws.com/dev",
+            "name": "authentication",
+            "endpoint": "https://x56x6mlw4i.execute-api.eu-west-2.amazonaws.com/dev",
             "region": "eu-west-2"
         },
         {
-            "name": "authentication",
-            "endpoint": "https://x56x6mlw4i.execute-api.eu-west-2.amazonaws.com/dev",
+            "name": "database",
+            "endpoint": "https://4hmjxzebnc.execute-api.eu-west-2.amazonaws.com/dev",
             "region": "eu-west-2"
         }
     ]
