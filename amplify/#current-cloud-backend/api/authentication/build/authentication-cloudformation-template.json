@@ -368,7 +368,7 @@
         "Name": "authentication"
       }
     },
-    "authenticationDefault4XXResponsef58f87e4": {
+    "authenticationDefault4XXResponse2061175f": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
@@ -383,7 +383,7 @@
         }
       }
     },
-    "authenticationDefault5XXResponsef58f87e4": {
+    "authenticationDefault5XXResponse2061175f": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWauthentication55a8efe1": {
+    "DeploymentAPIGWauthentication835ced88": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "authenticationDefault4XXResponsef58f87e4",
-        "authenticationDefault5XXResponsef58f87e4"
+        "authenticationDefault4XXResponse2061175f",
+        "authenticationDefault5XXResponse2061175f"
       ]
     }
   }

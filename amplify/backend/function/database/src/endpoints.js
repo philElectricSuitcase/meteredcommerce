@@ -1,377 +1,201 @@
-const Database = require("./services/database");
+const Database = require("./utils/database");
 const { getRecordsQuery, getRecordQuery } = require("./methods/get");
 const { insertRecordQuery } = require("./methods/create");
-const { updateRecordQuery } = require("./methods/update");
+const { updateRecordQuery, updateRecordsQuery } = require("./methods/update");
 const { deleteRecordQuery, deleteRecordsQuery } = require("./methods/delete");
-
-const { DB_HOST, DB_USER, DB_PWD, DB_PORT, DB_NAME } = process.env;
-
-//DATABASE CONNECTION CONFIG
-const DATABASE_CONFIG = {
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PWD,
-  port: DB_PORT,
-  database: DB_NAME,
-};
 
 function routes(app) {
   //Get multiple records
   app.get("/:table", async (req, res) => {
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      let data = [];
-      let sqlQuery = {};
-      databaseInstance
-        .connect()
-        .then(() => getRecordsQuery(req.params.table, req.query))
-        .then((sql) => (sqlQuery = sql))
-        .then(() => databaseInstance.queryRecords(sqlQuery.records))
-        .then((resultsData) => (data = resultsData))
-        .then(() => databaseInstance.countRecords(sqlQuery.count))
-        .then((countData) =>
-          res.status(200).json({ data: data, total: countData })
-        )
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table } = req.params;
+    const { query } = req;
+
+    console.log(
+      `[Endpoints] getList: { table: ${table}, query: ${JSON.stringify(
+        query
+      )} }`
+    );
+
+    const database = new Database();
+
+    let sql_query = {};
+    let data = [];
+    let count = 0;
+    database
+      .connect()
+      .then(() => getRecordsQuery(table, query))
+      .then((get_query) => (sql_query = get_query))
+      .then(() => database.queryRecords(sql_query.records))
+      .then((data_result) => (data = data_result))
+      .then(() => database.countRecords(sql_query.count))
+      .then((count_result) => (count = count_result))
+      .then(() => database.closeConnection())
+      .then(() => res.status(200).json({ data: data, total: count }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] getList: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 
   //Get single record
   app.get("/:table/:id", async (req, res) => {
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      databaseInstance
-        .connect()
-        .then(() => getRecordQuery(req.params.table, req.params.id))
-        .then((value) => databaseInstance.queryRecords(value))
-        .then((value) => res.status(200).json(value))
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table, id } = req.params;
+
+    console.log(`[Endpoints] getOne: { table: ${table}, id: ${id} }`);
+
+    const database = new Database();
+
+    let data = {};
+
+    database
+      .connect()
+      .then(() => getRecordQuery(table, id))
+      .then((get_query) => database.queryRecords(get_query))
+      .then((data_result) => (data = data_result[0]))
+      .then(() => database.closeConnection())
+      .then(() => res.status(200).json({ data: data }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] getOne: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 
   //Create record
   app.post("/:table", async (req, res) => {
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      databaseInstance
-        .connect()
-        .then(() => insertRecordQuery(req.params.table))
-        .then((value) => databaseInstance.insertRecord(value, req.body))
-        .then((value) => res.status(200).json(value))
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table } = req.params;
+    const { body } = req;
+
+    console.log(
+      `[Endpoints] create: { table: ${table}, body: ${JSON.stringify(body)} }`
+    );
+
+    const database = new Database();
+
+    let data = body;
+
+    database
+      .connect()
+      .then(() => insertRecordQuery(table))
+      .then((insert_query) => database.insertRecord(insert_query, body))
+      .then((data_result) => (data["id"] = data_result.insertId))
+      .then(() => database.closeConnection())
+      .then(() => res.status(200).json({ data: data }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] create: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 
   //Update multiple records - to be updated
   app.put("/:table", async (req, res) => {
-    //TO BE UPDATED - CURRENTLY GET ALL
-    let sql = `SELECT * FROM ${req.params.table}`;
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      databaseInstance
-        .connect()
-        .then(() => databaseInstance.queryRecords(sql))
-        .then((value) => res.status(200).json(value))
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table } = req.params;
+    const { ids, data } = req.body;
+
+    console.log(
+      `[Endpoints] updateMany: { table: ${table}, ids: ${JSON.stringify(
+        ids
+      )}, data: ${JSON.stringify(data)} }`
+    );
+
+    const database = new Database();
+
+    database
+      .connect()
+      .then(() => updateRecordQuery(table, ids))
+      .then((update_query) => database.updateRecords(update_query, data))
+      .then(() => database.closeConnection())
+      .then(() => res.status(200).json({ data: ids }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] updateMany: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 
   //Update single record
   app.put("/:table/:id", async (req, res) => {
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      databaseInstance
-        .connect()
-        .then(() => updateRecordQuery(req.params.table, req.params.id))
-        .then((value) => databaseInstance.updateRecord(value, req.body))
-        .then((value) => res.status(200).json(value))
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table, id } = req.params;
+    const { body } = req;
+
+    console.log(
+      `[Endpoints] update: {table: ${table}, id: ${id}, body: ${JSON.stringify(
+        body
+      )}}`
+    );
+
+    const database = new Database();
+
+    let response;
+
+    database
+      .connect()
+      .then(() => updateRecordQuery(table, id))
+      .then((update_query) => database.updateRecord(update_query, body))
+      .then(() => database.closeConnection())
+      .then(() => res.status(200).json({ data: body }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] update: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 
   //Delete multiple records
   app.delete("/:table", async (req, res) => {
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      databaseInstance
-        .connect()
-        .then(() => deleteRecordsQuery(req.params.table, req.query.filter))
-        .then((value) => databaseInstance.deleteRecords(value))
-        .then((value) => res.status(200).json(value))
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table } = req.params;
+    const { body } = req;
+
+    console.log(
+      `[Endpoints] deleteMany: {table: ${table}, body: ${JSON.stringify(body)}}`
+    );
+
+    const database = new Database();
+
+    let data = body;
+
+    database
+      .connect()
+      .then(() => deleteRecordsQuery(table, body))
+      .then((delete_query) => database.deleteRecords(delete_query))
+      .then(() => database.closeConnection())
+      .then(() => res.status(200).json({ data: data }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] deleteMany: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 
   //Delete single record
   app.delete("/:table/:id", async (req, res) => {
-    return new Promise((resolve, reject) => {
-      const databaseInstance = new Database(DATABASE_CONFIG);
-      databaseInstance
-        .connect()
-        .then(() => deleteRecordQuery(req.params.table, req.params.id))
-        .then((value) => databaseInstance.deleteRecord(value))
-        .then((value) => res.status(200).json(value))
-        .then(() => databaseInstance.closeConnection())
-        .then(() => {
-          resolve({
-            statusCode: 200,
-            message: "Successful operation",
-            error: "",
-          });
-        })
-        .catch((err) => {
-          console.error("Had an operational error: ", err);
-          res.status(500).json(err);
-          databaseInstance
-            .closeConnection()
-            .then(() => {
-              console.log(
-                "Database connection has been closed successfully after error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error: "Had an operational error: " + err,
-              });
-            })
-            .catch((error) => {
-              console.error(
-                "Failed to close database connection following error"
-              );
-              resolve({
-                statusCode: 500,
-                message: "",
-                error:
-                  "Had an operational error: " +
-                  err +
-                  "\n\nAlso failed to close database following operational error:" +
-                  error,
-              });
-            });
-        });
-    });
+    const { table, id } = req.params;
+    const { body } = req;
+
+    console.log(
+      `[Endpoints] delete: {table: ${table}, id: ${id}, body: ${JSON.stringify(
+        body
+      )}}`
+    );
+
+    const database = new Database();
+
+    let data = body;
+
+    database
+      .connect()
+      .then(() => deleteRecordQuery(table, id))
+      .then((delete_query) => database.deleteRecord(delete_query))
+      .then(() => databaseInstance.closeConnection())
+      .then(() => res.status(200).json({ data: data }))
+      .catch((err) => {
+        database.closeConnection();
+        console.error(`[Endpoints] delete: err = ${JSON.stringify(err)}`);
+        res.status(500).json(err);
+      });
   });
 }
+
 module.exports = routes;

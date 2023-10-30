@@ -15,22 +15,26 @@ const AccountsList = () => (
   </List>
 );
 
-const AccountsListEditable = () => (
-  <List hasCreate empty={false}>
-    <EditableDatagrid
-      mutationMode="undoable"
-      createForm={<AccountsForm />}
-      editForm={<AccountsForm />}
-    >
-      <TextField source="Account Name" />
-      <TextField source="Account No" />
-      <TextField source="Address" />
-      <TextField source="Email" />
-      <TextField source="Start Date" />
-      <TextField source="Active" />
-    </EditableDatagrid>
-  </List>
-);
+const AccountsListEditable = () => {
+  return (
+    <>
+      <List hasCreate empty={false}>
+        <EditableDatagrid
+          mutationMode="undoable"
+          createForm={<AccountsForm />}
+          editForm={<AccountsForm />}
+        >
+          <TextField source="Account Name" />
+          <TextField source="Account No" />
+          <TextField source="Address" />
+          <TextField source="Email" />
+          <TextField source="Start Date" />
+          <TextField source="Active" />
+        </EditableDatagrid>
+      </List>
+    </>
+  );
+};
 
 const AccountsForm = () => (
   <RowForm>
@@ -43,4 +47,4 @@ const AccountsForm = () => (
   </RowForm>
 );
 
-export default AccountsListEditable;
+export { AccountsList, AccountsListEditable };

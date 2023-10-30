@@ -200,13 +200,13 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/function/authentication-cloudformation-template.json",
         "Parameters": {
           "dbHost": "utility.cgu5if2hyatb.eu-north-1.rds.amazonaws.com",
-          "dbUser": "admin",
-          "dbPwd": "Th1s1sS3cure!",
-          "dbPort": "3306",
           "dbName": "mc01",
+          "dbPort": "3306",
+          "dbPwd": "Th1s1sS3cure!",
           "dbRegion": "eu-north-1",
+          "dbUser": "admin",
           "deploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
-          "s3Key": "amplify-builds/authentication-2f7a4938754871625450-build.zip",
+          "s3Key": "amplify-builds/authentication-62774b64447939394359-build.zip",
           "env": "dev"
         }
       }
@@ -217,13 +217,13 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-meteredcommerce-dev-94002-deployment/amplify-cfn-templates/function/database-cloudformation-template.json",
         "Parameters": {
           "dbHost": "utility.cgu5if2hyatb.eu-north-1.rds.amazonaws.com",
-          "dbUser": "admin",
-          "dbPwd": "Th1s1sS3cure!",
-          "dbPort": "3306",
           "dbName": "mc01",
+          "dbPort": "3306",
+          "dbPwd": "Th1s1sS3cure!",
           "dbRegion": "eu-north-1",
+          "dbUser": "admin",
           "deploymentBucketName": "amplify-meteredcommerce-dev-94002-deployment",
-          "s3Key": "amplify-builds/database-5448346a5a556472766c-build.zip",
+          "s3Key": "amplify-builds/database-59775068585661665952-build.zip",
           "env": "dev"
         }
       }

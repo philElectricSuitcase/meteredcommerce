@@ -1,8 +1,18 @@
 const mysql = require("mysql");
 
+const { DB_HOST, DB_USER, DB_PWD, DB_PORT, DB_NAME } = process.env;
+
+const DATABASE_CONFIG = {
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PWD,
+  port: DB_PORT,
+  database: DB_NAME,
+};
+
 class Database {
-  constructor(config) {
-    this.connection = mysql.createConnection(config);
+  constructor() {
+    this.connection = mysql.createConnection(DATABASE_CONFIG);
   }
 
   connect() {
@@ -11,7 +21,7 @@ class Database {
         if (err) {
           reject(err);
         } else {
-          console.log("Connected to database");
+          console.log(`[Database] connect: Connected to database`);
           resolve();
         }
       });
@@ -20,12 +30,14 @@ class Database {
 
   queryRecords(sql) {
     return new Promise((resolve, reject) => {
-      console.log("sql:" + sql);
+      console.log(`[Database] queryRecords: sql = ${sql}`);
       this.connection.query(sql, (err, results) => {
         if (err) {
           reject(err);
         } else {
-          console.log("Retrieved records: " + results);
+          console.log(
+            `[Database] queryRecords: results = ${JSON.stringify(results)}`
+          );
           resolve(results);
         }
       });
@@ -34,12 +46,12 @@ class Database {
 
   countRecords(sql) {
     return new Promise((resolve, reject) => {
-      console.log("sql:" + sql);
+      console.log(`[Database] countRecords: sql = ${sql}`);
       this.connection.query(sql, (err, results) => {
         if (err) {
           reject(err);
         } else {
-          console.log("Retrieved count: " + results[0].total);
+          console.log(`[Database] countRecords: results = ${results[0].total}`);
           resolve(results[0].total);
         }
       });
@@ -52,13 +64,15 @@ class Database {
 
       if (newRecord.length === 0) resolve();
 
-      console.log("Insert query: " + insertQuery);
+      console.log(`[Database] insertRecord: sql = ${sql}`);
 
       this.connection.query(insertQuery, newRecord, (err, result) => {
         if (err) {
           reject(err);
         } else {
-          console.log("Records updated:", result);
+          console.log(
+            `[Database] insertRecord: result = ${JSON.stringify(result)}`
+          );
           resolve(result);
         }
       });
@@ -71,48 +85,46 @@ class Database {
 
       if (newRecordValues.length === 0) resolve();
 
-      console.log("Update query: " + updateQuery);
-      console.log("New Values: " + newRecordValues);
+      console.log(`[Database] updateRecord: updateQuery = ${updateQuery}`);
+      console.log(
+        `[Database] updateRecord: newRecordValues = ${JSON.stringify(
+          newRecordValues
+        )}`
+      );
 
       this.connection.query(updateQuery, newRecordValues, (err, result) => {
         if (err) {
           reject(err);
         } else {
-          console.log("Records updated:", result.affectedRows);
+          console.log(
+            `[Database] updateRecord: result = ${JSON.stringify(result)}`
+          );
           resolve(result);
         }
       });
     });
   }
 
-  updateRecords(newRecordValues) {
+  updateRecords(updateQuery, newRecordValues) {
     return new Promise((resolve, reject) => {
       if (newRecordValues === null) resolve();
 
       if (newRecordValues.length === 0) resolve();
 
-      let updateQuery = "UPDATE webform_10dayfree SET processed = CASE id ";
-      for (let i = 0; i < newRecordValues.length; i++)
-        updateQuery +=
-          "WHEN " +
-          newRecordValues[i].id +
-          " THEN " +
-          newRecordValues[i].newValue +
-          " ";
-      updateQuery += "END WHERE id IN (";
+      console.log(`[Database] updateRecords: updateQuery = ${updateQuery}`);
+      console.log(
+        `[Database] updateRecords: newRecordValues = ${JSON.stringify(
+          newRecordValues
+        )}`
+      );
 
-      updateQuery += newRecordValues[0].id;
-      for (let i = 1; i < newRecordValues.length; i++)
-        updateQuery += ", " + newRecordValues[i].id;
-      updateQuery += ")";
-
-      console.log("Update query: " + updateQuery);
-
-      this.connection.query(updateQuery, (err, result) => {
+      this.connection.query(updateQuery, newRecordValues, (err, result) => {
         if (err) {
           reject(err);
         } else {
-          console.log("Records updated:", result.affectedRows);
+          console.log(
+            `[Database] updateRecords: result = ${JSON.stringify(result)}`
+          );
           resolve();
         }
       });
