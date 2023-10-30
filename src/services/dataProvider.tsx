@@ -153,7 +153,7 @@ export const dataProvider = {
     return new Promise((resolve, reject) => {
       // console.log(`[dataProvider] delete: running...`);
       const myInit = {
-        body: JSON.stringify(params.previousData),
+        body: params.previousData,
       };
       return API.del("database", `/${resource}/${params.id}`, myInit)
         .then((response) => {
@@ -171,7 +171,7 @@ export const dataProvider = {
     return new Promise((resolve, reject) => {
       // console.log(`[dataProvider] deleteMany: running...`);
       const myInit = {
-        body: JSON.stringify(params.ids),
+        body: params.ids,
       };
       return API.del("database", `/${resource}`, myInit)
         .then((response) => {
