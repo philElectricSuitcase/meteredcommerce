@@ -368,7 +368,7 @@
         "Name": "database"
       }
     },
-    "databaseDefault4XXResponse1a5b62c9": {
+    "databaseDefault4XXResponse9101ef13": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
@@ -383,7 +383,7 @@
         }
       }
     },
-    "databaseDefault5XXResponse1a5b62c9": {
+    "databaseDefault5XXResponse9101ef13": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWdatabase95a9794b": {
+    "DeploymentAPIGWdatabasef6c65a15": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "databaseDefault4XXResponse1a5b62c9",
-        "databaseDefault5XXResponse1a5b62c9"
+        "databaseDefault4XXResponse9101ef13",
+        "databaseDefault5XXResponse9101ef13"
       ]
     }
   }
